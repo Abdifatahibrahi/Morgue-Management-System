@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
-from .models import Gender, Corpse
+from .models import Gender, Corpse, Room, Next_of_kin
 
 # Create your views here.
 
@@ -82,6 +82,8 @@ def delete_corpse(request, did):
 def add_corpse(request):
     error = ""
     gend = Gender.objects.all()
+    next_of_kin = Next_of_kin.objects.all()
+    rooms = Room.objects.all()
     if not request.user.is_staff:
         return redirect('login')
 
@@ -90,22 +92,25 @@ def add_corpse(request):
         l_name = request.POST['last_name']
         sex = request.POST['gender']
         date_of_death = request.POST['date']
-        kin_name = request.POST['kin_name']
-        kin_contact = request.POST['kin_contact']
+        r = request.POST['room']
+        kin_name = request.POST['kin']
+        
+
 
         gender = Gender.objects.filter(gender=sex).first()
+        kin = Next_of_kin.objects.filter(first_name=kin_name).first()
+        room = Room.objects.filter(room_no=r).first()
 
 
         try:
             d1 = Corpse.objects.create(first_name=f_name, last_name=l_name, 
-            gender=gender, next_of_kin_name=kin_name, 
-            next_of_kin_contact=kin_contact, date_of_death=date_of_death)
+            gender=gender, next_of_kin=kin, room=room, date_of_death=date_of_death)
             d1.save()
             error = "no"
         
         except:
             error = "yes"
-    d = {"error": error, "gender": gend}
+    d = {"error": error, "gender": gend, 'kin': next_of_kin, 'rooms': rooms}
     return render(request, 'add_corpse.html', d)
 
 

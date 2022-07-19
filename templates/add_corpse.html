@@ -37,11 +37,19 @@
             <option value="{{gen.gender}}">{{gen.gender}}</option>
             {% endfor %}
         </select>
-        <label>Next of kin name:</label>
-        <input type="text" class="form-control" name="kin_name">
+        <label>Next of Kin:</label>
+        <select name="kin" class="form-control">
+            {% for k in kin %}
+            <option value="{{k.first_name}}">{{k.first_name}}</option>
+            {% endfor %}
+        </select>
 
-        <label>Next of kin contact:</label>
-        <input type="name" class="form-control" name="kin_contact">
+        <label>Room:</label>
+        <select name="room" class="form-control">
+            {% for r in rooms %}
+            <option value="{{r.room_no}}">{{r.room_no}}</option>
+            {% endfor %}
+        </select>
         <label>Date of death:</label>
         <input type="date" class="form-control" name="date">
 
