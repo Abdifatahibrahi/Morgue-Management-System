@@ -1,0 +1,30 @@
+
+{% include "base.html" %}
+
+<h1 class="text-center">View Patient</h1>
+
+<table id="example" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Patient_Id</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in pat %}
+          <tr>
+              <td>{{p.id}}</td>
+              <td>{{p.name}}</td>
+              <td>{{p.gender}}</td>
+              <td>{{p.mobile}}</td>
+              <td>{{p.address}}</td>
+              <td><a href="{% url 'delete_patient' p.id %}" 
+                onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a></td>
+          </tr>
+        {% endfor %}
+    </tbody>
+</table>

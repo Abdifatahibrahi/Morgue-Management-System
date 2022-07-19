@@ -1,0 +1,61 @@
+{% include "base.html" %}
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+
+        background-color: rgb(243, 239, 239);
+    }
+
+    .mydivstyle{
+        text-align: center; 
+        background-color: honeydew;
+        
+    }
+    .mydivstyle:hover{
+        box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
+        transform: translateY(-5px);
+        border-bottom: 1px solid black;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .mylink{
+        color: black;
+    }
+
+    .mylink:hover{
+        text-decoration: none;
+
+    }
+</style>
+
+
+
+<h1 class="text-center mt-5">Admin Dashboard</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 mydivstyle">
+            <h1 style="color: red;">{{ corpses }}</h1>
+            <a href="{% url 'view_corpse' %}" class="mylink">
+                <h2>Corpses</h2>
+            </a>
+        </div>
+        {% comment %} <div class="col-sm-4 mydivstyle">
+            <h1 style="color: red;">{{ patient }}</h1>
+            <a href="{% url 'view_patient' %}" class="mylink">
+                <h2>patients</h2>
+            </a>
+        </div>
+        <div class="col-sm-4 mydivstyle">
+            <h1 style="color: red;">{{ appointment }}</h1>
+            <a href="{% url 'view_appointment' %}" class="mylink">
+                <h2>Appointments</h2>
+            </a>
+        </div> {% endcomment %}
+    </div>
+</div>

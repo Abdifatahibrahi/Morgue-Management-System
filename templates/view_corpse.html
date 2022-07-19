@@ -1,0 +1,37 @@
+
+{% include "base.html" %}
+
+<h1 class="text-center">View Corpse</h1>
+
+<table id="example" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Corpse_Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Next of kin name</th>
+            <th>Next of kin contact</th>
+            <th>Date of death</th>
+            <th>Date of admission</th>
+            <th>Time of admission</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in corpse %}
+          <tr>
+              <td>{{c.id}}</td>
+              <td>{{c.first_name}}</td>
+              <td>{{c.last_name}}</td>
+              <td>{{c.gender}}</td>
+              <td>{{c.next_of_kin_name}}</td>
+              <td>{{c.next_of_kin_contact}}</td>
+              <td>{{c.date_of_death}}</td>
+              <td>{{c.date_of_admission}}</td>
+              <td>{{c.Time_of_admission}}</td>
+              <td><a href="{% url 'delete_corpse' c.id %}" 
+                onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a></td>
+          </tr>
+        {% endfor %}
+    </tbody>
+</table>

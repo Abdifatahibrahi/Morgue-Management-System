@@ -1,0 +1,112 @@
+from django.shortcuts import render
+
+
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+# from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
+from .models import Gender, Corpse
+
+# Create your views here.
+
+
+
+def Home(request):
+    # doctors = Doctor.objects.all()
+    return render(request, 'home.html') 
+
+
+# def About(request):
+#     return render(request, 'about.html') 
+
+
+# def Contact(request):
+#     return render(request, 'contact.html') 
+
+def dashboard(request):
+    corpses = Corpse.objects.all()
+    if not request.user.is_staff:
+        return redirect('login')
+    
+    co_of_corpses = len(corpses)
+
+    mycontext = {
+          'corpses': co_of_corpses
+    }
+    return render(request, 'index.html', mycontext)
+
+def Login(request):
+    error = ""
+    if request.method == 'POST':
+        u = request.POST['uname']
+        p = request.POST['pwd']
+
+        user = authenticate(username=u, password=p)
+        try:
+            if user.is_staff:
+                login(request, user)
+                error = "no"
+            
+            else:
+                error = "yes"
+        except:
+            error = "yes"
+    d = {"error": error}
+    return render(request, 'login.html', d)
+
+
+def Logout_admin(request):
+    if not request.user.is_staff:
+        return redirect('login')
+
+    logout(request)
+    return redirect('admin_login')
+
+
+def view_corpse(request):
+    if not request.user.is_staff:
+        return redirect('login')
+    cpse = Corpse.objects.all()
+    d = {'corpse': cpse}
+    return render(request, 'view_corpse.html', d)
+
+
+def delete_corpse(request, did):
+    if not request.user.is_staff:
+        return redirect('login')
+    corpse = Corpse.objects.get(id=did)
+    corpse.delete()
+    return redirect('view_corpse')
+
+
+def add_corpse(request):
+    error = ""
+    gend = Gender.objects.all()
+    if not request.user.is_staff:
+        return redirect('login')
+
+    if request.method == 'POST':
+        f_name = request.POST['first_name']
+        l_name = request.POST['last_name']
+        sex = request.POST['gender']
+        date_of_death = request.POST['date']
+        kin_name = request.POST['kin_name']
+        kin_contact = request.POST['kin_contact']
+
+        gender = Gender.objects.filter(gender=sex).first()
+
+
+        try:
+            d1 = Corpse.objects.create(first_name=f_name, last_name=l_name, 
+            gender=gender, next_of_kin_name=kin_name, 
+            next_of_kin_contact=kin_contact, date_of_death=date_of_death)
+            d1.save()
+            error = "no"
+        
+        except:
+            error = "yes"
+    d = {"error": error, "gender": gend}
+    return render(request, 'add_corpse.html', d)
+
+
+

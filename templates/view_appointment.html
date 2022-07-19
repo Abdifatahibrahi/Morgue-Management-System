@@ -1,0 +1,30 @@
+
+{% include "base.html" %}
+
+<h1 class="text-center">View Appointments</h1>
+
+<table id="example" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Appointment_Id</th>
+            <th>Doctor</th>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for a in app %}
+          <tr>
+              <td>{{a.id}}</td>
+              <td>{{a.doctor}}</td>
+              <td>{{a.patient}}</td>
+              <td>{{a.date}}</td>
+              <td>{{a.time}}</td>
+              <td><a href="{% url 'delete_appointment' a.id %}" 
+                onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a></td>
+          </tr>
+        {% endfor %}
+    </tbody>
+</table>
