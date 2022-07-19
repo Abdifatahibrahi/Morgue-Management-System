@@ -39,7 +39,7 @@ class Room(models.Model):
     care_taker = models.ForeignKey(Care_taker, on_delete=models.CASCADE)
     
     def __str__(self):
-        return f"{self.room_no} {self.care_taker}"
+        return f"{self.room_no}"
 
 class Corpse(models.Model):
     first_name = models.CharField(max_length=100)
