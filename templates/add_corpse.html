@@ -21,7 +21,7 @@
 {% endif %}
 
 
-<div class="container">
+<div class="container" style="padding-bottom: 80px;">
     <h2 class="text-center">Add corpse</h2>
     <form method="POST">
         {% csrf_token %}
@@ -35,6 +35,12 @@
         <select name="gender" class="form-control">
             {% for gen in gender %}
             <option value="{{gen.gender}}">{{gen.gender}}</option>
+            {% endfor %}
+        </select>
+        <label>TypeOfCorpse:</label>
+        <select name="type_of_corpse" class="form-control">
+            {% for type in type_of_corpse %}
+            <option value="{{type.type}}">{{type.type}}</option>
             {% endfor %}
         </select>
         <label>Next of Kin:</label>

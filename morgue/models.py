@@ -11,6 +11,12 @@ from django.db import models
 #     ('Intersex', 'Intersex'),
 # )
 
+class TypeOfCorpse(models.Model):
+    type = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return f'{self.type}'
+
 class Gender(models.Model):
     gender = models.CharField(max_length=100)
 
@@ -37,6 +43,7 @@ class Care_taker(models.Model):
 class Room(models.Model):
     room_no = models.CharField(max_length=50)
     care_taker = models.ForeignKey(Care_taker, on_delete=models.CASCADE)
+    no_of_shelves = models.PositiveIntegerField( null=True, blank=True)
     
     def __str__(self):
         return f"{self.room_no}"
@@ -45,6 +52,7 @@ class Corpse(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     gender = models.ForeignKey(Gender, on_delete=models.CASCADE)
+    type_of_corpse = models.ForeignKey(TypeOfCorpse, on_delete=models.CASCADE, null=True, blank=True)
     next_of_kin = models.ForeignKey(Next_of_kin, on_delete=models.CASCADE, null=True, blank=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True)
     date_of_death = models.DateField(blank=True, default=datetime.now())
